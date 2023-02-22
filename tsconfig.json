@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "esModuleInterop": true
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "ts-node": {
+    "esm": true
+  }
+}
