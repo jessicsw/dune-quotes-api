@@ -12,12 +12,13 @@ datasource db {
 
 model Author {
   id    String @id @default(uuid())
+  name String @unique
   books Book[]
 }
 
 model Book {
   id       String  @id @default(uuid())
-  title    String
+  title    String @unique
   quotes   Quote[]
   author   Author  @relation(fields: [authorId], references: [id])
   authorId String

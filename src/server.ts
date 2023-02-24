@@ -8,4 +8,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/example", (req, res) => {
+  console.log("hello");
+  res.json({ message: "heeloooo" });
+});
+
 export default app;
