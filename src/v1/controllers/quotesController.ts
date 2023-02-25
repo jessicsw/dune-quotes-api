@@ -1,24 +1,28 @@
+import { Response, Request } from "express";
 import prisma from "../../db";
 import sanitizeQuery from "../../../utils/sanitizeQuery";
 
-const getAllQuotes = async (req, res) => {
+const getAllQuotes = async (req: Request, res: Response) => {
   const { title, author, authorId, limit, page } = req.query;
   const take = Number(limit) || 10;
   const skip = page && Number(page) > 1 ? (Number(page) - 1) * take : 0;
+  const where = {
+    where: {
+      book: {
+        title: title ? sanitizeQuery(title as string) : {},
+        authorId: authorId as string,
+        author: {
+          name: author ? sanitizeQuery(author as string) : {},
+        },
+      },
+    },
+  };
 
   try {
     const quotes = await prisma.quote.findMany({
       skip,
       take,
-      where: {
-        book: {
-          title: sanitizeQuery(title as string),
-          authorId: authorId as string,
-          author: {
-            name: sanitizeQuery(author as string),
-          },
-        },
-      },
+      ...where,
       select: {
         id: true,
         text: true,
@@ -38,35 +42,23 @@ const getAllQuotes = async (req, res) => {
     const count = await prisma.quote.count({
       skip,
       take,
-      where: {
-        book: {
-          title: sanitizeQuery(title as string),
-          authorId: authorId as string,
-          author: sanitizeQuery(author as string),
-        },
-      },
+      ...where,
     });
 
     const totalCount = await prisma.quote.count({
-      where: {
-        book: {
-          title: sanitizeQuery(title as string),
-          authorId: authorId as string,
-          author: sanitizeQuery(author as string),
-        },
-      },
+      ...where,
     });
 
     if (quotes.length === 0) {
       throw new Error();
-    } else {
-      res.json({
-        count,
-        totalCount,
-        page: page ? Number(page) : 1,
-        quotes,
-      });
     }
+
+    res.json({
+      count,
+      totalCount,
+      page: page ? Number(page) : 1,
+      quotes,
+    });
   } catch (error) {
     res.status(400).json({
       status: "400 - Bad Request",
@@ -75,7 +67,7 @@ const getAllQuotes = async (req, res) => {
   }
 };
 
-const getQuoteById = async (req, res) => {
+const getQuoteById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const quote = await prisma.quote.findUnique({

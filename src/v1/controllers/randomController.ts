@@ -1,16 +1,18 @@
+import { Response, Request } from "express";
 import prisma from "../../db";
 import sanitizeQuery from "../../../utils/sanitizeQuery";
 
-const getRandomQuote = async (req, res) => {
+const getRandomQuote = async (req: Request, res: Response) => {
   const { title, author, authorId } = req.query;
+
   try {
     const quotes = await prisma.quote.findMany({
       where: {
         book: {
-          title: sanitizeQuery(title as string),
+          title: title ? sanitizeQuery(title as string) : {},
           authorId: authorId as string,
           author: {
-            name: sanitizeQuery(author as string),
+            name: author ? sanitizeQuery(author as string) : {},
           },
         },
       },
@@ -35,6 +37,7 @@ const getRandomQuote = async (req, res) => {
     }
 
     const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
     res.json(quote);
   } catch (error) {
     res.status(400).json({
