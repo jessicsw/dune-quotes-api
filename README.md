@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/jessicsw/dune-quotes">
-    <img src="./assets/dune.jpeg" alt="Logo" width="120" height="120" style="border-radius: 50%;">
+    <img src="./assets/dune.jpeg" alt="Logo" width="120" height="120">
   </a>
 
   <h3 align="center">Dune Quotes API</h3>
