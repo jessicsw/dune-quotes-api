@@ -14,6 +14,14 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const apiLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 100, // Limit each IP to 100 requests per `window` (here, per hour)
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(apiLimiter);
+
 app.use("/api/v1/random", v1RandomRouter);
 app.use("/api/v1/quotes", v1QuotesRouter);
 app.use("/api/v1/books", v1BooksRouter);
