@@ -1,19 +1,30 @@
-# Dune Quotes API
+<p align="center">
+  <a href="https://github.com/jessicsw/dune-quotes">
+    <img src="./assets/dune.jpeg" alt="Logo" width="120" height="120" style="border-radius: 50%;">
+  </a>
 
+  <h3 align="center">Dune Quotes API</h3>
+</p>
 
+<br><br>
 
-## Considerations
+## About
 
-### Architecture
+Dune Quotes is a side project I started in 2023 because I couldn't find an API that provided quotes from Frank Herbert's Dune series.
 
+Current books:
 
-### Pagination
+- Dune (1965)
+- Dune Messiah (1969)
+- Children of Dune (1976)
+- God Emperor of Dune (1981)
+- Heretics of Dune (1984)
+- Chapterhouse: Dune (1985)
 
-Using offset pagination for limited result set instead of cursor-based pagination because of limited result set.
 
 ## Get random quote
 
-Returns a single random quote from the database.
+Returns a single random quote.
 
 ### Query Parameters
 
@@ -21,16 +32,19 @@ Returns a single random quote from the database.
 | ----------- | ----------- | ----------- |
 | `title`     | `String`    | (Optional) Get a random quote from a specific book title
 | `author`    | `String`    | (Optional) Get a random quote by one author
-| `authorId`  | `String`    | (Optional) Same as `author` param, except it uses the author's id
+| `authorId`  | `String`    | (Optional) Same as `author` parameter, except it uses `authorId`
 
 ### Response
 
 ```
 {
   id: string,
+
   text: string,
+
   book: {
     title: string,
+
     author: {
       name: string
     }
@@ -51,11 +65,11 @@ Returns a list of quotes matching a given query. By default, this will return a 
 
 | Parameter   | Type        | Description |
 | ----------- | ----------- | ----------- |
-| `title`     | `String`    | Get a list of quotes from a specific book title
-| `author`    | `String`    | Get a list of quotes by one author
-| `authorId`  | `String`    | Same as `author` parameter, except it uses `authorId`
-| `limit`     | `Number`    | `Min: 1` &nbsp; `Max: 100` &nbsp; `Default: 10` <br><br> Sets the number of quotes to return per page
-| `page`      | `Number`    | `Min: 1` &nbsp; `Default: 1` <br><br> The page of results to return. If the value is greater than the total number of pages, the request will not return any results
+| `title`     | `String`    | (Optional) Get a list of quotes from a specific book title
+| `author`    | `String`    | (Optional) Get a list of quotes by one author
+| `authorId`  | `String`    | (Optional) Same as `author` parameter, except it uses `authorId`
+| `limit`     | `Number`    | `Min: 1` &nbsp; `Max: 100` &nbsp; `Default: 10` <br><br> (Optional) Sets the number of quotes to return per page
+| `page`      | `Number`    | `Min: 1` &nbsp; `Default: 1` <br><br> (Optional) The page of results to return. If the value is greater than the total number of pages, the request will not return any results
 
 ### Response
 
@@ -69,14 +83,40 @@ Returns a list of quotes matching a given query. By default, this will return a 
 
   quotes: Array<{
     id: string,
+
     text: string,
+
     book: {
       title: string,
+      
       author: {
         name: string
       }
     }
   }>
+}
+```
+
+## Get quote by ID
+
+Returns a quote by its ID
+
+
+### Response
+
+```
+{
+  id: string,
+
+  text: string,
+
+  book: {
+    title: string,
+
+    author: {
+      name: string
+    }
+  }
 }
 ```
 
@@ -88,11 +128,12 @@ Returns a list of books matching a given query. By default, this will return a p
 
 | Parameter   | Type        | Description |
 | ----------- | ----------- | ----------- |
-| `title`     | `String`    | Get a list of books from a specific book title
-| `author`    | `String`    | Get a list of books by one author
-| `authorId`  | `String`    | Same as `author` parameter, except it uses `authorId`
-| `limit`     | `Number`    | `Min: 1` &nbsp; `Max: 100` &nbsp; `Default: 10` <br><br> Sets the number of books to return per page
-| `page`      | `Number`    | `Min: 1` &nbsp; `Default: 1` <br><br> The page of results to return. If the value is greater than the total number of pages, the request will not return any results
+| `title`     | `String`    | (Optional) Get a specific book title
+| `bookId`     | `String`    | (Optional) Same as `title`, except it uses `bookId`
+| `author`    | `String`    | (Optional) Get a list of books by one author
+| `authorId`  | `String`    | (Optional) Same as `author` parameter, except it uses `authorId`
+| `limit`     | `Number`    | `Min: 1` &nbsp; `Max: 100` &nbsp; `Default: 10` <br><br> (Optional) Sets the number of books to return per page
+| `page`      | `Number`    | `Min: 1` &nbsp; `Default: 1` <br><br> (Optional) The page of results to return. If the value is greater than the total number of pages, the request will not return any results
 
 ### Response
 
@@ -106,10 +147,39 @@ Returns a list of books matching a given query. By default, this will return a p
 
   books: Array<{
     id: string,
+
     title: string,
+
+    published: integer
+
     author: {
       name: string
     }
   }>
 }
 ```
+
+## Get book by ID
+
+Returns a book by its ID.
+
+
+### Response
+
+```
+{
+  id: string,
+
+  title: string,
+
+  published: integer
+
+   author: {
+    name: string
+  }
+}
+```
+
+## License
+
+[MIT License](./LICENSE) © 2023 Jessica Wong
