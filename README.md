@@ -3,6 +3,7 @@
     <img src="./assets/dune.png" alt="Logo" width="120" height="120">
   </a>
 
+  <p align="center">A free RESTful API serving Dune Quotes</p>
   <h3 align="center">Dune Quotes API</h3>
 </p>
 
@@ -10,16 +11,26 @@
 
 ## About
 
-Dune Quotes is a side project I started in 2023 because I couldn't find an API that provided quotes from Frank Herbert's Dune series.
+After finishing the Dune series in 2022, I started this side project because I couldn't find an API that served Dune quotes. Using Express, Prisma, and Postgres, this app will provide you with quotable passages from the original Dune series:
 
-Current books:
+<!-- ```
+{
+  "id": "b497b556-d85e-425e-bfa4-1c17c8ca9943",
 
-- Dune (1965)
-- Dune Messiah (1969)
-- Children of Dune (1976)
-- God Emperor of Dune (1981)
-- Heretics of Dune (1984)
-- Chapterhouse: Dune (1985)
+  "text": "Give me the judgment of balanced minds in preference to laws every time. Codes and manuals create patterned behavior. All patterned behavior tends to go unquestioned, gathering destructive momentum. —Darwi Odrade",
+
+  "book": {
+    "title": "Chapterhouse: Dune",
+    "author": {
+      "name": "Frank Herbert"
+    }
+  }
+}
+``` -->
+
+### Rate Limit
+
+The default rate limit is __100 requests per hour__, per IP address. If the rate limit is exceeded, the API will respond with the HTTP status code error `429 Too Many Requests`.
 
 
 ## Get random quote
