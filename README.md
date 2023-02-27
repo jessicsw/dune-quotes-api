@@ -11,26 +11,11 @@
 
 ## About
 
-After finishing the Dune series in 2022, I started this side project because I couldn't find an API that served Dune quotes. Using Express, Prisma, and Postgres, this app will provide you with quotable passages from the original Dune series:
-
-<!-- ```
-{
-  "id": "b497b556-d85e-425e-bfa4-1c17c8ca9943",
-
-  "text": "Give me the judgment of balanced minds in preference to laws every time. Codes and manuals create patterned behavior. All patterned behavior tends to go unquestioned, gathering destructive momentum. —Darwi Odrade",
-
-  "book": {
-    "title": "Chapterhouse: Dune",
-    "author": {
-      "name": "Frank Herbert"
-    }
-  }
-}
-``` -->
+I started this side project because I couldn't find an API that served Dune quotes. Using Express, Prisma, and Postgres, this app will provide you with quotable passages from the Dune series.
 
 ### Rate Limit
 
-The default rate limit is __100 requests per hour__, per IP address. If the rate limit is exceeded, the API will respond with the HTTP status code error `429 Too Many Requests`.
+The default rate limit is __100 requests per hour__, per IP address. If the rate limit is exceeded, the API will respond with a `429` status code.
 
 
 ## Get random quote
