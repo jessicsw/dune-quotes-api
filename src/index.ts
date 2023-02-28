@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import compression from "compression";
 import rateLimit from "express-rate-limit";
 import v1RandomRouter from "./v1/routes/randomRoute";
 import v1QuotesRouter from "./v1/routes/quotesRoute";
@@ -34,9 +36,12 @@ app.use(apiLimiter);
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(compression());
 
+/* Routes */
 app.use("/", (req, res) => {
-  throw new Error();
+  res.redirect("https://github.com/jessicsw/dune-quotes");
 });
 app.use("/api/v1/random", v1RandomRouter);
 app.use("/api/v1/quotes", v1QuotesRouter);
