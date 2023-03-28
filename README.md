@@ -15,7 +15,7 @@ I started this side project because I couldn't find an API that served Dune quot
 
 ### Rate Limit
 
-The default rate limit is __100 requests per hour__, per IP address. If the rate limit is exceeded, the API will respond with a `429` status code.
+The default rate limit is __100 requests per hour__, per IP address. If the rate limit is exceeded, the API will respond with a `429` status code. 
 
 
 ## Get random quote
