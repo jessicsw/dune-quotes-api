@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/index.js"
+    "start": "npm install --omit=dev && node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -29,7 +29,8 @@
     "express-rate-limit": "^6.7.0",
     "helmet": "^6.0.1",
     "lodash.merge": "^4.6.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pm2": "^5.3.0"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
