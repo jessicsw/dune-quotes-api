@@ -40,12 +40,10 @@ app.use(helmet());
 app.use(compression());
 
 /* Routes */
-app.use("/", (req, res) => {
-  res.redirect("https://github.com/jessicsw/dune-quotes");
-});
 app.use("/api/v1/random", v1RandomRouter);
 app.use("/api/v1/quotes", v1QuotesRouter);
 app.use("/api/v1/books", v1BooksRouter);
+app.use("/", (req, res) => res.send("Home"));
 
 /* Error handling middleware functions */
 const errorLogger = (
