@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "NODE_ENVIRONMENT=production npm install --omit=dev && npx prisma generate && npx prisma migrate deploy && node dist/src/index.js"
+    "start": "NODE_ENVIRONMENT=production npm install --omit=dev && npx prisma generate ./prisma/schema.prisma && npx prisma migrate deploy && node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
