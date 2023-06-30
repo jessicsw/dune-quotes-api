@@ -11,7 +11,7 @@
 
 ## About
 
-I started this side project because I couldn't find an API that served Dune quotes. Using Express, Prisma, and Postgres, this app will provide you with quotable passages from the Dune series.
+I started this side project because I couldn't find an API that served Dune quotes. Using Express, Prisma, and Postgres. This app will provide you with quotable passages from the Dune series.
 
 ### Rate Limit
 
