@@ -43,7 +43,9 @@ app.use(compression());
 app.use("/api/v1/random", v1RandomRouter);
 app.use("/api/v1/quotes", v1QuotesRouter);
 app.use("/api/v1/books", v1BooksRouter);
-app.use("/", (req, res) => res.send("Home"));
+app.use("/", (_, res) =>
+  res.send({ errors: { message: "No matching route for request." } })
+);
 
 /* Error handling middleware functions */
 const errorLogger = (
