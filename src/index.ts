@@ -1,9 +1,10 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import cors from "cors";
 import compression from "compression";
-import rateLimit from "express-rate-limit";
+import rateLimit, { RateLimitRequestHandler } from "express-rate-limit";
 import v1RandomRouter from "./v1/routes/randomRoute";
 import v1QuotesRouter from "./v1/routes/quotesRoute";
 import v1BooksRouter from "./v1/routes/booksRoute";
@@ -38,6 +39,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(compression());
+app.use(cors());
 
 /* Routes */
 app.use("/api/v1/random", v1RandomRouter);
