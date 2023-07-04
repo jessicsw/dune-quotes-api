@@ -1,17 +1,18 @@
 import { Response, Request } from "express";
 import prisma from "../../db";
 import sanitizeQuery from "../../../utils/sanitizeQuery";
+import { URL } from "../../types";
 
-const getAllBooks = async (req: Request, res: Response) => {
-  const { title, author, authorId, limit, page } = req.query;
+const getAllBooks = async (req: Request, res: Response): Promise<void> => {
+  const { title, author, authorId, limit, page }: URL.Query = req.query;
   const take = Number(limit) || 10;
   const skip = page && Number(page) > 1 ? (Number(page) - 1) * take : 0;
   const where = {
     where: {
-      title: title ? sanitizeQuery(title as string) : {},
-      authorId: authorId as string,
+      title: title ? sanitizeQuery(title) : {},
+      authorId: authorId || {},
       author: {
-        name: author ? sanitizeQuery(author as string) : {},
+        name: author ? sanitizeQuery(author) : {},
       },
     },
   };
@@ -43,10 +44,6 @@ const getAllBooks = async (req: Request, res: Response) => {
       ...where,
     });
 
-    if (books.length === 0) {
-      throw new Error();
-    }
-
     res.json({
       count,
       totalCount,
@@ -61,8 +58,8 @@ const getAllBooks = async (req: Request, res: Response) => {
   }
 };
 
-const getBookById = async (req: Request, res: Response) => {
-  const { id } = req.params;
+const getBookById = async (req: Request, res: Response): Promise<void> => {
+  const { id }: URL.Parameters = req.params;
 
   try {
     const book = await prisma.book.findUnique({
@@ -79,15 +76,11 @@ const getBookById = async (req: Request, res: Response) => {
       },
     });
 
-    if (book) {
-      res.json(book);
-    } else {
-      throw new Error();
-    }
+    res.json(book);
   } catch (error) {
     res
       .status(400)
-      .json({ status: "400 - Bad Request", message: "Invalid ID" });
+      .json({ status: "400 - Bad Request", message: "Invalid Book ID" });
   }
 };
 

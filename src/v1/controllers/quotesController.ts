@@ -1,18 +1,19 @@
-import { Response, Request } from "express";
-import prisma from "../../db";
 import sanitizeQuery from "../../../utils/sanitizeQuery";
+import prisma from "../../db";
+import { Response, Request } from "express";
+import { URL } from "./../../types.d";
 
-const getAllQuotes = async (req: Request, res: Response) => {
-  const { title, author, authorId, limit, page } = req.query;
+const getAllQuotes = async (req: Request, res: Response): Promise<void> => {
+  const { title, author, authorId, limit, page }: URL.Query = req.query;
   const take = Number(limit) || 10;
   const skip = page && Number(page) > 1 ? (Number(page) - 1) * take : 0;
   const where = {
     where: {
       book: {
-        title: title ? sanitizeQuery(title as string) : {},
-        authorId: authorId as string,
+        title: title ? sanitizeQuery(title) : {},
+        authorId: authorId || {},
         author: {
-          name: author ? sanitizeQuery(author as string) : {},
+          name: author ? sanitizeQuery(author) : {},
         },
       },
     },
@@ -49,10 +50,6 @@ const getAllQuotes = async (req: Request, res: Response) => {
       ...where,
     });
 
-    if (quotes.length === 0) {
-      throw new Error();
-    }
-
     res.json({
       count,
       totalCount,
@@ -67,8 +64,8 @@ const getAllQuotes = async (req: Request, res: Response) => {
   }
 };
 
-const getQuoteById = async (req: Request, res: Response) => {
-  const { id } = req.params;
+const getQuoteById = async (req: Request, res: Response): Promise<void> => {
+  const { id }: URL.Parameters = req.params;
   try {
     const quote = await prisma.quote.findUnique({
       where: { id },
@@ -88,11 +85,7 @@ const getQuoteById = async (req: Request, res: Response) => {
       },
     });
 
-    if (quote) {
-      res.json(quote);
-    } else {
-      throw new Error();
-    }
+    res.json(quote);
   } catch (error) {
     res
       .status(400)

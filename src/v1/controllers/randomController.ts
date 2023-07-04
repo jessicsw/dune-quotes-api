@@ -1,18 +1,19 @@
-import { Response, Request } from "express";
 import prisma from "../../db";
 import sanitizeQuery from "../../../utils/sanitizeQuery";
+import { Response, Request } from "express";
+import { URL } from "./../../types.d";
 
-const getRandomQuote = async (req: Request, res: Response) => {
-  const { title, author, authorId } = req.query;
+const getRandomQuote = async (req: Request, res: Response): Promise<void> => {
+  const { title, author, authorId }: URL.Query = req.query;
 
   try {
     const quotes = await prisma.quote.findMany({
       where: {
         book: {
-          title: title ? sanitizeQuery(title as string) : {},
-          authorId: authorId as string,
+          title: title ? sanitizeQuery(title) : {},
+          authorId: authorId || {},
           author: {
-            name: author ? sanitizeQuery(author as string) : {},
+            name: author ? sanitizeQuery(author) : {},
           },
         },
       },
@@ -32,23 +33,18 @@ const getRandomQuote = async (req: Request, res: Response) => {
       },
     });
 
-    if (quotes.length === 0) {
-      throw new Error();
-    }
-
     const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
     res.json(quote);
   } catch (error) {
     res.status(400).json({
       status: "400 - Bad Request",
-      message: "Invalid query parameters",
+      message: "Check query parameters",
     });
   }
 };
 
-// function getRandomQuotes
-// requires take
+// Future TODO: function getRandomQuotes
 
 export default {
   getRandomQuote,

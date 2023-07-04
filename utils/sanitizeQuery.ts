@@ -1,6 +1,6 @@
 const sanitizeQuery = (string: string): string => {
   const PREPOSITION = "of";
-  const capitalizeFirstChar = (word: string) => {
+  const capitalizeFirstChar = (word: string): string => {
     return word && word[0].toUpperCase() + word.slice(1);
   };
   const sanitizedQuery = string
