@@ -9,18 +9,31 @@
 
 <br><br>
 
-## About
+# About
 
-I started this side project because I couldn't find an API that served Dune quotes. Using Express, Prisma, and Postgres. This app will provide you with quotable passages from the Dune series.
+After finishing the original series, I wanted a way to access all the memorable quotes I came across but couldn't find an API that served Dune quotes so I made one.
 
-### Rate Limit
+# Usage
+
+Dune Quotes is a free, easy to use RESTful API that returns JSON and uses standard HTTP features.
+
+API endpoints are relative to the following base URL: `https://api.duniverse.space/v1/`
+
+# Rate Limit
 
 The default rate limit is __100 requests per hour__, per IP address. If the rate limit is exceeded, the API will respond with a `429` status code. 
+
+# Using the REST API
+Dive into the specifics of each API endpoint by checking out the complete documentation below.
 
 
 ## Get random quote
 
 Returns a single random quote.
+
+```js
+GET /random
+```
 
 ### Query Parameters
 
@@ -32,7 +45,7 @@ Returns a single random quote.
 
 ### Response
 
-```
+```ts
 {
   id: string,
 
@@ -48,14 +61,14 @@ Returns a single random quote.
 }
 ```
 
-Example:
-```
-/api/v1/random?title=heretics-of-dune&author=frank-herbert
-```
 
 ## Get list of quotes
 
 Returns a list of quotes matching a given query. By default, this will return a paginated list of all quotes.
+
+```js
+GET /quotes
+```
 
 ### Query Parameters
 
@@ -69,7 +82,7 @@ Returns a list of quotes matching a given query. By default, this will return a 
 
 ### Response
 
-```
+```ts
 {
   count: number, // The number of quotes returned in the response
 
@@ -97,10 +110,13 @@ Returns a list of quotes matching a given query. By default, this will return a 
 
 Returns a quote by its ID
 
+```js
+GET /quotes/:id
+```
 
 ### Response
 
-```
+```ts
 {
   id: string,
 
@@ -120,6 +136,10 @@ Returns a quote by its ID
 
 Returns a list of books matching a given query. By default, this will return a paginated list of all books.
 
+```js
+GET /books
+```
+
 ### Query Parameters
 
 | Parameter   | Type        | Description |
@@ -133,7 +153,7 @@ Returns a list of books matching a given query. By default, this will return a p
 
 ### Response
 
-```
+```ts
 {
   count: number, // The number of books returned in the response
 
@@ -159,10 +179,13 @@ Returns a list of books matching a given query. By default, this will return a p
 
 Returns a book by its ID.
 
+```js
+GET /books/:id
+```
 
 ### Response
 
-```
+```ts
 {
   id: string,
 
